@@ -7,14 +7,12 @@ data class WorldClockState(
     // system
     val currentSystemTime: String = "",
     val currentSystemDate: String = "",
-    // TODO Change to system locale and zone
-    val systemDefaultLocale: Locale = Locale.ENGLISH,
-    val systemDefaultTimeZone: ZoneId = ZoneId.of("UTC"),
+    val systemDefaultLocale: Locale = Locale.getDefault(),
+    val systemDefaultTimeZone: ZoneId = ZoneId.systemDefault(),
 
     // selected
-    // TODO Change to system locale and zone
-    val selectedLocale: Locale = Locale.ENGLISH,
-    val selectedTimeZone: ZoneId = ZoneId.of("UTC"),
+    val selectedLocale: Locale = systemDefaultLocale,
+    val selectedTimeZone: ZoneId = systemDefaultTimeZone,
     val currentSelectedTime: String = "",
     val currentSelectedDate: String = "",
 )

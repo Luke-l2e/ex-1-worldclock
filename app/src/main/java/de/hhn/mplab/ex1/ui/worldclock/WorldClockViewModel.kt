@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -49,8 +51,14 @@ class WorldClockViewModel : ViewModel() {
      */
     private fun updateSelectedDateTime() {
         _state.value = _state.value.copy(
-            currentSelectedTime = getTime(_state.value.selectedLocale, _state.value.selectedTimeZone),
-            currentSelectedDate = getDate(_state.value.selectedLocale, _state.value.selectedTimeZone)
+            currentSelectedTime = getTime(
+                _state.value.selectedLocale,
+                _state.value.selectedTimeZone
+            ),
+            currentSelectedDate = getDate(
+                _state.value.selectedLocale,
+                _state.value.selectedTimeZone
+            )
         )
     }
 
@@ -62,20 +70,22 @@ class WorldClockViewModel : ViewModel() {
      * @return A string representing the current time formatted in the medium style for the given locale and time zone.
      */
     private fun getTime(locale: Locale, timeZone: ZoneId = ZoneId.systemDefault()): String {
-        // TODO Implement part-1
-        return "TODO Implement"
+        val formatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM).withLocale(locale)
+            .withZone(timeZone)
+        return ZonedDateTime.now().format(formatter).toString()
     }
 
     /**
      * Retrieves the current date as a formatted string according to the specified locale and time zone.
      *
      * @param locale The locale to be used for formatting the date.
-     * @param timeZone The time zone to get the current date in. Defaults to the system's time zone. //TODO Relevant for part-2
+     * @param timeZone The time zone to get the current date in. Defaults to the system's time zone.
      * @return A string representing the current date formatted in the medium style for the given locale and time zone.
      */
     private fun getDate(locale: Locale, timeZone: ZoneId = ZoneId.systemDefault()): String {
-        // TODO Implement part-1
-        return "TODO Implement"
+        val formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale)
+            .withZone(timeZone)
+        return ZonedDateTime.now().format(formatter).toString()
     }
 
     /**
@@ -116,8 +126,7 @@ class WorldClockViewModel : ViewModel() {
      * @return A set of strings, each representing a unique time zone ID.
      */
     fun getAvailableTimezones(): Set<String> {
-        // TODO Implement part-2
-        return emptySet()
+        return ZoneId.getAvailableZoneIds()
     }
 
     /**
@@ -130,8 +139,7 @@ class WorldClockViewModel : ViewModel() {
      * @return An array of `Locale` objects, each representing a unique locale supported by the system.
      */
     fun getAvailableLocales(): Array<Locale> {
-        // TODO Implement part-2
-        return arrayOf()
+        return Locale.getAvailableLocales()
     }
 
 }
